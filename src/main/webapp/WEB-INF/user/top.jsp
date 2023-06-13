@@ -6,6 +6,7 @@
 </head>
 <body>
 ${currentUser.name}さんこんにちは。
+<a href="/mutter/insert" class="btn mutter">つぶやく</a>
 <a href="/user/logout">ログアウト</a>
 </body>
 </html>
