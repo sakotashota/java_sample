@@ -65,7 +65,25 @@ public class Repository{
         }
     
     }
+ public static void delete(Mutter mutter){
+        Connection connection = null;
+        PreparedStatement stmt = null;
 
+        try{
+            String sql = "DELETE from mutters where id = ?";
+
+            connection = Client.create();
+
+            stmt = connection.prepareStatement(sql);
+            stmt.setInt(1,mutter.getId());
+
+            stmt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            Client.close(connection, stmt,null);
+        }
+    }
     // そのユーザーのつぶやき一覧(配列)を取得
     public static ArrayList<Mutter> indexMutters(User user){
         Connection connection = null;
@@ -104,17 +122,18 @@ public class Repository{
         }
     }
 
-    public static void delete(Mutter mutter){
+    public static void edit(Mutter mutter){
         Connection connection = null;
         PreparedStatement stmt = null;
 
         try{
-            String sql = "DELETE from mutters where id = ?";
+            String sql = "UPDATE mutters set text = ? where id = ?";
 
             connection = Client.create();
 
             stmt = connection.prepareStatement(sql);
-            stmt.setInt(1,mutter.getId());
+            stmt.setString(1,mutter.getText());
+            stmt.setInt(2,mutter.getId());
 
             stmt.executeUpdate();
         }catch (SQLException e){
